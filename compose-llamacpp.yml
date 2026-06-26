@@ -1,7 +1,10 @@
 services:
   llm:
     image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: very-small-llm-llamacpp
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:8083:8080"
     volumes:
       - model-cache:/root/.cache
     command:
@@ -15,6 +18,8 @@ services:
       - "4096"
       - --parallel
       - "1"
+      - --n-predict
+      - "256"
 
 volumes:
   model-cache:
